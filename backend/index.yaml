@@ -1,0 +1,7 @@
+indexes:
+
+- kind: Page
+  ancestor: yes
+  properties:
+  - name: title
+  - name: body

@@ -1,0 +1,42 @@
+{{define "editPage"}}
+{{template "header" .}}
+<div class="container">
+  <div class="contents">
+    <header>
+      <h1>Editing {{.Title}}</h1>
+    </header>
+    <form action="/save/{{.Title}}" method="POST" id="js-editForm">
+      <div class="editor-body clearfix">
+        <div class="editor-content">
+          <textarea name="body" rows="20" cols="80" class="editor-textarea" id="mkbody">{{printf "%s" .Body}}</textarea>
+        </div>
+        <div class="editor-preview" id="js-preview">
+          {{.HtmlBody}}
+        </div>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" id="js-preview-button" class="btn btn-info">Preview Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+  {{template "footer"}}
+<script>
+  document.getElementById('js-preview-button').addEventListener('click',
+    function(evt) {
+    "use strict";
+    evt.preventDefault();
+    var form = new FormData(document.getElementById('js-editForm'));
+    fetch('/api/mkd', {
+      method: 'POST',
+      body: form
+    }).then(function (response) {
+      return response.json()
+    }).then(function (json) {
+      document.getElementById('js-preview').innerHTML = json;
+    });
+  }, false);
+</script>
+{{template "tail"}}
+{{end}}
