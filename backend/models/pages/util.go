@@ -32,7 +32,7 @@ func readBody(filename string) ([]byte, error) {
 }
 
 func (u utilFuncs) Parse(raw []byte) []byte {
-	return blackfriday.MarkdownCommon(raw)
+	return blackfriday.Run(raw)
 }
 
 func getBodyFromDatastore(title string, r *http.Request) ([]byte, error) {
